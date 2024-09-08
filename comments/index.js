@@ -1,4 +1,5 @@
 const express=require('express');
+const axios = require('axios')
 const app=express();
 const parser=require('body-parser')
 const cors=require('cors')
@@ -16,9 +17,14 @@ app.post('/posts/:id/comments',(req,res)=>{
     const postCommnets=comments[postId]||[];
     postCommnets.push({id:postCommnets.length,commentContent});
     comments[postId]=postCommnets;
+    axios.post("http://localhost:4005/events",{type:"CommentCreated",data:{postId,id:postCommnets.length-1,commentContent}})
     res.status(201).send(postCommnets)
 })
 
+app.post('/events',(req,res)=>{
+    console.log(req.body.type + " event received");
+    res.status(200).send({status:'ok'})
+})
 app.listen(4001,()=>{
 console.log("Server listening to Port 4001")
 })

@@ -11,15 +11,23 @@ app.get('/posts',(req,res)=>{
 })
 
 app.post('/posts', (req,res)=>{
-    const {title}=req.body;
-    const id=posts.length
-    posts.push({id,title});
-    axios.post("http://localhost:4005/events",{type:"PostCreated",data:{id,title}})
-    res.status(201).send({id})
+    try{
+        const {title}=req.body;
+        const id=posts.length
+        console.log({id,title})
+        posts.push({id,title});
+        axios.post("http://localhost:4005/events",{type:"PostCreated",data:{id,title}})
+        res.status(201).send({id})
+    }
+    catch(e)
+    {
+        console.log(e.message)
+    }
+    
 })
 
 app.post('/events',(req,res)=>{
-    console.log(req.body.type + " event received");
+    console.log(req.body.type + " event received")
     res.status(200).send({status:'ok'})
 })
 

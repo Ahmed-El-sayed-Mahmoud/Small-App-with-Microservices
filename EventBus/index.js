@@ -20,7 +20,7 @@ app.post('/events', async (req, res) => {
         res.send({ status: 'ok' });
     } catch (error) {
         console.error('Error forwarding event:', error.message);
-        res.status(500).send({ status: 'error', message: 'Failed to forward event' });
+        res.status(500).send({ status: 'error', message: 'Failed to forward event' })
     }
 });
 

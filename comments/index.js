@@ -12,13 +12,19 @@ app.get('/posts/:id/comments',(req,res)=>{
 })
 
 app.post('/posts/:id/comments',(req,res)=>{
-    const postId=req.params.id;
-    const {commentContent}=req.body;
-    const postCommnets=comments[postId]||[];
-    postCommnets.push({id:postCommnets.length,commentContent});
-    comments[postId]=postCommnets;
-    axios.post("http://localhost:4005/events",{type:"CommentCreated",data:{postId,id:postCommnets.length-1,commentContent}})
-    res.status(201).send(postCommnets)
+    try{
+        const postId=req.params.id;
+        const {commentContent}=req.body;
+        const postCommnets=comments[postId]||[];
+        postCommnets.push({id:postCommnets.length,commentContent});
+        comments[postId]=postCommnets;
+        axios.post("http://localhost:4005/events",{type:"CommentCreated",data:{postId,id:postCommnets.length-1,commentContent}})
+        res.status(201).send(postCommnets)
+    }
+    catch(e){
+        console.log(e.message)
+    }
+    
 })
 
 app.post('/events',(req,res)=>{

@@ -5,7 +5,8 @@ import CommentList from './CommentList';
 function PostsList() {
   const [posts,setPosts]=useState([]);
   const fetchposts=async()=>{
-    const res=await axios.get("http://localhost:4000/posts");
+    const res=await axios.get("http://localhost:4002/posts");
+    console.log(res.data)
     setPosts(res.data)
   }
   useEffect(() => {
@@ -20,12 +21,12 @@ function PostsList() {
     <div className='flex gap-2 mt-5'>
       
         {
-          posts.map((val,idnex)=>{
-            return <div className='w-64 h-64 bg-gray-950' key={idnex}>
-              <p className='text-center text-2xl'>{val.title}</p>
-              
-              <CreateComments postId={val.id}/>
-              <CommentList postId={val.id}/>
+          Object.keys(posts).map((key)=>{
+            return <div className='w-64 h-64 bg-gray-950' key={key}>
+              <p className='text-center text-2xl'>{posts[key].title}</p>
+              {console.log(posts[key].comments)}
+              <CreateComments postId={posts[key].id}/>
+              <CommentList comments={posts[key].comments}/>
             </div>
           })
         }

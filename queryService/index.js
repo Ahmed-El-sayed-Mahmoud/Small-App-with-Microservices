@@ -15,7 +15,7 @@ app.post('/events',(req,res)=>{
     if(eventType==='PostCreated')
     {
         const post=req.body.data;
-        posts[post.id]={id:post.id,comments:[]}
+        posts[post.id]={id:post.id,title:post.title,comments:[]}
     }
     if(eventType==='CommentCreated')
     {
